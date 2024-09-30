@@ -32,6 +32,22 @@ public class ToDoList {
 		System.out.println("Completed tasks: " + complete);
 		System.out.println("Pending tasks: " + incomplete);
 	}
+	public void editTask() {
+		System.out.println("CurrentTask:" + description);
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Edited Description");
+		String edited = scanner.nextLine();
+		this.description = edited;;	
+	}
+	public void deleteTask(int index) {
+		taskList.remove(index);
+	}
+	public void saveTask() {
+		
+	}
+	public void loadTask() {
+		
+	}
 //	@Override
 //	public String toString() {  //overriding the object troString() method to directly print the object task1
 //		return description+(isComplete ? "(complete)" : "(pending)");
@@ -52,7 +68,9 @@ public class ToDoList {
 			System.out.println("3. Mark a task as complete");
 			System.out.println("4. Mark a task as incomplete");
 			System.out.println("5. Count complete and incomplete tasks");
-			System.out.println("6 Exit");
+			System.out.println("6. Edit Task");
+			System.out.println("7. Delete Task");
+			System.out.println("8 Exit");
 			System.out.println("=========CHOOSE AN OPTION========");
 			
 			int choice = scanner.nextInt();
@@ -92,11 +110,28 @@ public class ToDoList {
 				ToDoList tasks = new ToDoList("");
 				tasks.counter();
 				break;
+				
 			case 6:
+				printTask();
+				System.out.println("Enter the number to edit");
+				int j = scanner.nextInt();
+				taskList.get(j-1).editTask();
+				break;
+				
+				
+			case 7:
+				printTask();
+				System.out.println("Enter the number to delete");
+				int k = scanner.nextInt();
+				taskList.get(k-1).deleteTask(k-1);
+				printTask();
+				break;
+				
+			case 8:
 				exit = true;
 				System.out.println("Exiting.....");
 				break;
-				
+			
 			default:
 				System.out.println("Invalid option, try again...");
 			}
