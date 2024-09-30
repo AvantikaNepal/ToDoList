@@ -1,5 +1,10 @@
 package toDoList;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -42,16 +47,34 @@ public class ToDoList {
 	public void deleteTask(int index) {
 		taskList.remove(index);
 	}
-	public void saveTask() {
-		
+	static void saveTask() {
+		System.out.println("Saving the file....");
+		 try (BufferedWriter writer = new BufferedWriter(new FileWriter("C://Users//acer//Desktop//JAVA/tasks.txt"))) {
+		        for (ToDoList task : taskList) {
+		            writer.write(task.toString());
+		            writer.newLine();
+		            System.out.println("File saved succesfully!");
+		        }
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
 	}
-	public void loadTask() {
-		
+	static void loadTask() {
+		System.out.println("File loading......");
+		 try (BufferedReader reader = new BufferedReader(new FileReader("C://Users//acer//Desktop//JAVA/tasks.txt"))) {
+		        String line;
+		        while ((line = reader.readLine()) != null) {
+		            taskList.add(new ToDoList(line)); // assuming your ToDoList constructor takes a String
+		            System.out.println("File loaded succesfully!");
+		        }
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
 	}
-//	@Override
-//	public String toString() {  //overriding the object troString() method to directly print the object task1
-//		return description+(isComplete ? "(complete)" : "(pending)");
-//	}
+	@Override
+	public String toString() {  //overriding the object troString() method to directly print the object task1
+		return description+(isComplete ? "(complete)" : "(pending)");
+	}
 	static void printTask() {
 		for(int i =0 ; i < taskList.size(); i++) {
 			ToDoList currentobj = taskList.get(i);
@@ -70,7 +93,9 @@ public class ToDoList {
 			System.out.println("5. Count complete and incomplete tasks");
 			System.out.println("6. Edit Task");
 			System.out.println("7. Delete Task");
-			System.out.println("8 Exit");
+			System.out.println("8. Save File");
+			System.out.println("9. Load File");
+			System.out.println("10. Exit");
 			System.out.println("=========CHOOSE AN OPTION========");
 			
 			int choice = scanner.nextInt();
@@ -128,6 +153,12 @@ public class ToDoList {
 				break;
 				
 			case 8:
+				saveTask();
+				break;	
+			case 9:
+				loadTask();
+				break;	
+			case 10:
 				exit = true;
 				System.out.println("Exiting.....");
 				break;
